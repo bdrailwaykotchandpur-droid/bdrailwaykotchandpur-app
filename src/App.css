@@ -26,6 +26,24 @@
   --shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* ===== DARK MODE ===== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --orange-primary: #f14f29;
+    --orange-dark: #ff6a47;
+    --orange-light: #e03e1a;
+    --orange-bg: #2d1a16;
+    --text-dark: #f7fafc;
+    --text-light: #a0aec0;
+    --bg-white: #1a202c;
+    --bg-gray: #2d3748;
+    --border-light: #4a5568;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.6);
+  }
+}
+
 /* ===== RESET & BASE ===== */
 * {
   margin: 0;

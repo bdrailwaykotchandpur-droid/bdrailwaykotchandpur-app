@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@capacitor-community/electron": "^5.0.1",
+    "@capacitor/android": "^8.3.4",
+    "@capacitor/core": "^8.3.4",
+    "@capacitor/ios": "^8.3.4",
     "es-toolkit": "^1.47.0",
     "leaflet": "^1.9.4",
     "leaflet-control-geocoder": "^3.3.1",
@@ -26,6 +29,7 @@
     "recharts": "^3.8.1"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.3.4",
     "@eslint/js": "^10.0.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

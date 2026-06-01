@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { toBengaliDigits } from '../utils/banglaTimeFormatter';
 
 const LocationEngine = () => {
@@ -9,10 +9,13 @@ const LocationEngine = () => {
   const [selectedTrain, setSelectedTrain] = useState('');
   const [userLocation, setUserLocation] = useState(null);
   const [statusMsg, setStatusMsg] = useState('');
+  const [isBroadcasting, setIsBroadcasting] = useState(false);
+  const [broadcastStats, setBroadcastStats] = useState(null);
+  const watchIdRef = useRef(null);
+  const lastPositionRef = useRef(null);
 
-  // Haversine formula to calculate distance in km
   const getDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371; // Radius of the earth in km
+    const R = 6371;
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLon = (lon2 - lon1) * (Math.PI / 180);
     const a = 
@@ -20,52 +23,37 @@ const LocationEngine = () => {
       Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * 
       Math.sin(dLon / 2) * Math.sin(dLon / 2); 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)); 
-    return R * c; // Distance in km
+    return R * c; 
   };
 
   useEffect(() => {
-    // Only prompt once per session
     const hasPrompted = sessionStorage.getItem('locationEnginePrompted');
     if (hasPrompted) return;
 
-    // Determine timeout based on current page
     const currentPath = window.location.pathname;
     let delay = 5000;
     
-    if (currentPath.includes('/news')) {
-      // Show much later for news readers (random 20-30 seconds)
-      delay = Math.floor(Math.random() * 10000) + 20000;
-    } else if (currentPath === '/' || currentPath.includes('/train')) {
-      // Show faster for train schedule viewers (random 3-6 seconds)
-      delay = Math.floor(Math.random() * 3000) + 3000;
-    } else {
-      // Standard delay for other pages (random 10-15 seconds)
-      delay = Math.floor(Math.random() * 5000) + 10000;
-    }
+    if (currentPath.includes('/news')) delay = Math.floor(Math.random() * 10000) + 20000;
+    else if (currentPath === '/' || currentPath.includes('/train')) delay = Math.floor(Math.random() * 3000) + 3000;
+    else delay = Math.floor(Math.random() * 5000) + 10000;
 
     const timer = setTimeout(() => {
       initiateLocationEngine();
     }, delay);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      if (watchIdRef.current) navigator.geolocation.clearWatch(watchIdRef.current);
+    };
   }, []);
 
   const initiateLocationEngine = () => {
     sessionStorage.setItem('locationEnginePrompted', 'true');
-    
-    if (!navigator.geolocation) {
-      console.log('Geolocation is not supported by your browser');
-      return;
-    }
+    if (!navigator.geolocation) return;
 
-    // Attempt to get location invisibly first, but browser will prompt if not previously granted
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        handlePositionReceived(position.coords.latitude, position.coords.longitude);
-      },
-      (error) => {
-        console.log('Location permission denied or error:', error.message);
-      },
+      (position) => handlePositionReceived(position.coords.latitude, position.coords.longitude),
+      (error) => console.log('Location error:', error.message),
       { timeout: 10000, enableHighAccuracy: true }
     );
   };
@@ -73,19 +61,14 @@ const LocationEngine = () => {
   const handlePositionReceived = async (lat, lng) => {
     setUserLocation({ lat, lng });
     try {
-      // 1. Fetch stations
       const stationsRes = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/stations`);
       const stationsData = await stationsRes.json();
+      if (!stationsData.success || !stationsData.data) return;
       
-      if (!stationsData.success || !stationsData.data || stationsData.data.length === 0) return;
-      
-      const stations = stationsData.data;
-      
-      // 2. Find nearest station (within 10km)
       let closest = null;
-      let minDistance = 10; // Max 10km radius
+      let minDistance = 10;
       
-      stations.forEach(station => {
+      stationsData.data.forEach(station => {
         if (station.latitude && station.longitude) {
           const dist = getDistance(lat, lng, station.latitude, station.longitude);
           if (dist < minDistance) {
@@ -95,84 +78,120 @@ const LocationEngine = () => {
         }
       });
       
-      if (!closest) return; // No station nearby
+      if (!closest) return;
       setNearestStation(closest);
       
-      // 3. Fetch trains and find matches
       const trainsRes = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/trains`);
       const trainsData = await trainsRes.json();
-      
       if (!trainsData.success || !trainsData.data) return;
       
       const trains = trainsData.data.filter(t => t.isActive !== false);
-      
-      // Filter trains that likely pass through or originate/terminate here
       const matches = trains.filter(t => {
         const fromMatch = t.from.toLowerCase().includes(closest.nameBengali.toLowerCase()) || t.from.toLowerCase().includes(closest.name.toLowerCase());
         const toMatch = t.to.toLowerCase().includes(closest.nameBengali.toLowerCase()) || t.to.toLowerCase().includes(closest.name.toLowerCase());
-        
         let intermediateMatch = false;
-        if (t.intermediateStations && t.intermediateStations.length > 0) {
+        if (t.intermediateStations) {
           intermediateMatch = t.intermediateStations.some(s => 
             s.stationNameBengali.toLowerCase().includes(closest.nameBengali.toLowerCase()) || 
             s.stationName.toLowerCase().includes(closest.name.toLowerCase())
           );
         }
-        
         return fromMatch || toMatch || intermediateMatch;
       });
       
       if (matches.length > 0) {
         setMatchedTrains(matches);
-        setShowPrompt(true); // Show the popup
+        setShowPrompt(true);
       }
-      
     } catch (error) {
       console.error('Location engine error:', error);
     }
   };
 
-  const handleSubmitLiveTracking = async () => {
-    if (!selectedTrain || !userLocation) return;
-    
-    setLoading(true);
-    setStatusMsg('');
-    
+  const sendPing = async (lat, lng, speed, trainId) => {
     try {
-      const train = matchedTrains.find(t => t._id === selectedTrain);
-      
-      const payload = {
-        trainId: train._id,
-        trainNumber: train.number,
-        trainName: train.name,
-        latitude: userLocation.lat,
-        longitude: userLocation.lng,
-        reporterName: 'Live Tracker Engine',
-        reporterContact: 'Auto'
-      };
-      
-      const res = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/locations/submit-location`, {
+      await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/locations/live-ping`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          trainId: trainId,
+          lat,
+          lng,
+          speed: speed || 0,
+          reporterName: 'Live Tracker Broadcast'
+        })
       });
-      
-      const data = await res.json();
-      
-      if (data.success) {
-        setStatusMsg('লাইভ ট্র্যাকিং আপডেট সফল হয়েছে! ধন্যবাদ।');
-        setTimeout(() => setShowPrompt(false), 2500);
-      } else {
-        setStatusMsg(data.message || 'আপডেট ব্যর্থ হয়েছে');
-      }
-    } catch (error) {
-      setStatusMsg('একটি ত্রুটি ঘটেছে');
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      console.error('Ping failed', err);
     }
   };
+
+  const startBroadcasting = () => {
+    if (!selectedTrain) return;
+    setLoading(true);
+    setStatusMsg('লাইভ ব্রডকাস্ট শুরু হচ্ছে...');
+
+    if (navigator.geolocation) {
+      setIsBroadcasting(true);
+      setShowPrompt(false);
+
+      watchIdRef.current = navigator.geolocation.watchPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          const time = position.timestamp;
+          let speed = position.coords.speed !== null ? position.coords.speed * 3.6 : 0; // m/s to km/h
+
+          if (!speed && lastPositionRef.current) {
+            // Calculate manual speed if device doesn't provide it
+            const dist = getDistance(lastPositionRef.current.lat, lastPositionRef.current.lng, lat, lng);
+            const timeDiff = (time - lastPositionRef.current.time) / 3600000; // hours
+            if (timeDiff > 0) {
+              speed = dist / timeDiff;
+            }
+          }
+
+          if (speed > 160) speed = 0; // Filter gps anomalies
+
+          lastPositionRef.current = { lat, lng, time };
+          setBroadcastStats({ speed: speed.toFixed(1) });
+          sendPing(lat, lng, speed, selectedTrain);
+        },
+        (error) => {
+          console.error('Watch error:', error);
+          setStatusMsg('লোকেশন পেতে সমস্যা হচ্ছে।');
+          stopBroadcasting();
+        },
+        { enableHighAccuracy: true, maximumAge: 10000, timeout: 15000 }
+      );
+    }
+  };
+
+  const stopBroadcasting = () => {
+    if (watchIdRef.current) {
+      navigator.geolocation.clearWatch(watchIdRef.current);
+      watchIdRef.current = null;
+    }
+    setIsBroadcasting(false);
+    setBroadcastStats(null);
+  };
+
+  if (isBroadcasting) {
+    return (
+      <div style={{ position: 'fixed', bottom: '80px', right: '20px', background: '#dc3545', color: 'white', padding: '15px', borderRadius: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.2)', zIndex: 9999, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: 'white', animation: 'pulse 1.5s infinite' }}></span>
+          <strong>লাইভ ব্রডকাস্ট চলছে</strong>
+        </div>
+        {broadcastStats && (
+          <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+            গতি: {toBengaliDigits(broadcastStats.speed)} কি.মি./ঘণ্টা
+          </div>
+        )}
+        <button onClick={stopBroadcasting} style={{ background: 'white', color: '#dc3545', border: 'none', padding: '5px 15px', borderRadius: '5px', fontWeight: 'bold', cursor: 'pointer' }}>বন্ধ করুন</button>
+      </div>
+    );
+  }
 
   if (!showPrompt) return null;
 
@@ -193,12 +212,12 @@ const LocationEngine = () => {
               <circle cx="12" cy="10" r="3"></circle>
             </svg>
           </div>
-          <h3>লাইভ ট্র্যাকিং</h3>
+          <h3>লাইভ লোকেশন শেয়ারিং</h3>
         </div>
         
         <div className="location-engine-body">
           <p>আপনাকে <strong>{nearestStation?.nameBengali} ({nearestStation?.name})</strong> স্টেশনের কাছাকাছি পাওয়া গেছে।</p>
-          <p>আপনি কি নিচের কোন ট্রেনে ভ্রমণ করছেন? যদি হ্যাঁ, তবে নির্বাচন করুন যাতে অন্য যাত্রীরা ট্রেনের সঠিক অবস্থান জানতে পারে।</p>
+          <p>আপনি কি নিচের কোন ট্রেনে ভ্রমণ করছেন? ট্রেন সিলেক্ট করে লাইভ ব্রডকাস্ট শুরু করুন, অন্য যাত্রীরা ট্রেনের রিয়েল-টাইম স্পিড এবং অবস্থান দেখতে পাবে।</p>
           
           <select 
             className="location-engine-select"
@@ -213,15 +232,15 @@ const LocationEngine = () => {
             ))}
           </select>
           
-          {statusMsg && <div className={`location-engine-status ${statusMsg.includes('সফল') ? 'success' : 'error'}`}>{statusMsg}</div>}
+          {statusMsg && <div className={`location-engine-status error`}>{statusMsg}</div>}
           
           <div className="location-engine-actions">
             <button 
               className="location-engine-btn primary" 
-              onClick={handleSubmitLiveTracking}
+              onClick={startBroadcasting}
               disabled={!selectedTrain || loading}
             >
-              {loading ? 'আপডেট হচ্ছে...' : 'লাইভ লোকেশন শেয়ার করুন'}
+              {loading ? 'শুরু হচ্ছে...' : 'লাইভ ব্রডকাস্ট শুরু করুন'}
             </button>
             <button className="location-engine-btn secondary" onClick={() => setShowPrompt(false)}>
               আমি ট্রেনে নেই

@@ -4346,9 +4346,6 @@ input[type="password"]:active {
 .live-text {
   font-size: 0.6rem;
   color: #dc3545;
-  50% {
-    opacity: 0.6;
-  }
 }
 
 /* Horizontal tracker station names */

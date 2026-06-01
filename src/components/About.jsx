@@ -1,5 +1,8 @@
 import React from 'react';
 import './About.css';
+import bkashLogo from '../images/bkash.png';
+import nagadLogo from '../images/nagad.png';
+import rocketLogo from '../images/rocket.png';
 
 const About = () => {
   return (
@@ -32,9 +35,18 @@ const About = () => {
         </div>
 
         <div className="coffee-small-section" style={{ background: '#f9f9f9', color: '#333', padding: '10px', borderRadius: '8px', margin: '15px 0', textAlign: 'center', fontSize: '0.9rem' }}>
-          <p style={{ margin: '0 0 8px 0', fontWeight: 'bold', color: '#f14f29' }}>প্রজেক্টটি বাঁচিয়ে রাখতে ডোনেট করুন!</p>
-          <p style={{ margin: '4px 0' }}><strong>bKash / Nagad:</strong> 01736733276</p>
-          <p style={{ margin: '4px 0' }}><strong>Rocket:</strong> 017367332768</p>
+          <p style={{ margin: '0 0 10px 0', fontWeight: 'bold', color: '#f14f29' }}>প্রজেক্টটি বাঁচিয়ে রাখতে ডোনেট করুন!</p>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', flexWrap: 'wrap' }}>
+            <p style={{ margin: '4px 0', display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <img src={bkashLogo} alt="bKash" style={{ width: '16px', height: '16px', objectFit: 'contain' }} />
+              <img src={rocketLogo} alt="Rocket" style={{ width: '16px', height: '16px', objectFit: 'contain' }} />
+              <strong>বিকাশ/রকেট:</strong> 01830794876
+            </p>
+            <p style={{ margin: '4px 0', display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <img src={nagadLogo} alt="Nagad" style={{ width: '16px', height: '16px', objectFit: 'contain' }} />
+              <strong>নগদ:</strong> 01580790310
+            </p>
+          </div>
         </div>
 
         <div className="footer-copyright">

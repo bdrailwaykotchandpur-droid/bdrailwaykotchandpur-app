@@ -69,3 +69,69 @@ jobs:
         run: |
           cd ios/App
           xcodebuild -workspace App.xcworkspace -scheme App -configuration Release clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          
+      - name: Install Dependencies
+        run: npm install --legacy-peer-deps
+        
+      - name: Build Web App
+        run: npm run build
+        
+      - name: Sync Capacitor Electron
+        run: npx cap sync @capacitor-community/electron
+        
+      - name: Build Windows EXE
+        run: |
+          cd electron
+          npm install
+          npm run electron:make
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Upload Windows EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: bdrailway-app-windows.exe
+          path: electron/dist/*.exe
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          
+      - name: Install Dependencies
+        run: npm install --legacy-peer-deps
+        
+      - name: Build Web App
+        run: npm run build
+        
+      - name: Sync Capacitor Electron
+        run: npx cap sync @capacitor-community/electron
+        
+      - name: Build Linux DEB
+        run: |
+          cd electron
+          npm install
+          npm run electron:make
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Upload Linux DEB
+        uses: actions/upload-artifact@v4
+        with:
+          name: bdrailway-app-linux.deb
+          path: electron/dist/*.deb

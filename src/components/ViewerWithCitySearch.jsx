@@ -629,7 +629,12 @@ const ViewerWithCitySearch = () => {
                         
                         {isOff && <span className="offday-badge">বন্ধ</span>}
                         {isRunning && (
-                          <span className="live-badge">লাইভ</span>
+                           <div className="live-animation-minimal">
+                              <span className="live-dot" style={{ display: 'inline-block', width: '8px', height: '8px', backgroundColor: '#dc3545', borderRadius: '50%', animation: 'pulse 1.5s infinite' }}></span>
+                              <span className="live-text" style={{ color: '#dc3545', fontSize: '0.7rem', fontWeight: 'bold' }}>
+                                LIVE {train.location?.speed ? `(${Math.round(train.location.speed)} km/h)` : ''}
+                              </span>
+                            </div>
                         )}
                         <span className={liveMode ? 'live-dot' : ''}></span>
 

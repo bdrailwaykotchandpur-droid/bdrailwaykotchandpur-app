@@ -19,7 +19,7 @@
   },
   "win": {
     "target": "nsis",
-    "icon": "assets/appIcon.ico"
+    "icon": "assets/appIcon.png"
   },
   "linux": {
     "target": "deb",

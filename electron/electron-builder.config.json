@@ -19,7 +19,8 @@
   },
   "win": {
     "target": "nsis",
-    "icon": "assets/appIcon.png"
+    "icon": "assets/appIcon.png",
+    "artifactName": "${productName} Setup.${ext}"
   },
   "linux": {
     "target": "deb",

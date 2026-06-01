@@ -31,6 +31,12 @@ const About = () => {
           <p className="time">সকাল ১০ টা হতে বিকাল ৫টা</p>
         </div>
 
+        <div className="coffee-small-section" style={{ background: '#f9f9f9', color: '#333', padding: '10px', borderRadius: '8px', margin: '15px 0', textAlign: 'center', fontSize: '0.9rem' }}>
+          <p style={{ margin: '0 0 8px 0', fontWeight: 'bold', color: '#f14f29' }}>প্রজেক্টটি বাঁচিয়ে রাখতে ডোনেট করুন!</p>
+          <p style={{ margin: '4px 0' }}><strong>bKash / Nagad:</strong> 01736733276</p>
+          <p style={{ margin: '4px 0' }}><strong>Rocket:</strong> 017367332768</p>
+        </div>
+
         <div className="footer-copyright">
           <p>বাংলাদেশ রেলওয়ে - কোটচাঁদপুর | সর্বস্বত্ব সংরক্ষিত © 2026</p>
           <p>একটি ওপেনসোর্স প্রজেক্ট</p>

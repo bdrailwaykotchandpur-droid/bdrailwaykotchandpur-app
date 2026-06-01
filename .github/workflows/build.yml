@@ -1,0 +1,71 @@
+name: Build Cross-Platform Apps
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-web-and-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          
+      - name: Setup Java (for Android)
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          
+      - name: Install Dependencies
+        run: npm install --legacy-peer-deps
+        
+      - name: Build Web App
+        run: npm run build
+        
+      - name: Sync Capacitor
+        run: npx cap sync android
+        
+      - name: Build Android APK
+        run: |
+          cd android
+          ./gradlew assembleDebug
+          
+      - name: Upload Android APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: bdrailway-app-debug.apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          
+      - name: Install Dependencies
+        run: npm install --legacy-peer-deps
+        
+      - name: Build Web App
+        run: npm run build
+        
+      - name: Sync Capacitor iOS
+        run: npx cap sync ios
+        
+      # Building .ipa requires provisioning profiles and certificates to be set up.
+      # This step builds the xcode project but cannot export .ipa without certs.
+      - name: Build iOS App
+        run: |
+          cd ios/App
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO

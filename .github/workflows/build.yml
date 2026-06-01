@@ -16,7 +16,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '22.x'
+
+      - name: Verify Node version
+        run: node -v
           
       - name: Setup Java (for Android)
         uses: actions/setup-java@v4
@@ -30,9 +33,12 @@ jobs:
       - name: Build Web App
         run: npm run build
         
-      - name: Sync Capacitor
+      - name: Sync Capacitor Android
         run: npx cap sync android
         
+      - name: Make gradlew executable
+        run: chmod +x android/gradlew
+
       - name: Build Android APK
         run: |
           cd android
@@ -41,7 +47,7 @@ jobs:
       - name: Upload Android APK
         uses: actions/upload-artifact@v4
         with:
-          name: bdrailway-app-debug.apk
+          name: bdrailway-android-debug
           path: android/app/build/outputs/apk/debug/app-debug.apk
 
   build-ios:
@@ -52,7 +58,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '22.x'
+
+      - name: Verify Node version
+        run: node -v
           
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
@@ -62,13 +71,24 @@ jobs:
         
       - name: Sync Capacitor iOS
         run: npx cap sync ios
-        
-      # Building .ipa requires provisioning profiles and certificates to be set up.
-      # This step builds the xcode project but cannot export .ipa without certs.
+
+      - name: Resolve Swift packages
+        run: |
+          cd ios/App
+          xcodebuild -resolvePackageDependencies -project App.xcodeproj -scheme App
+
       - name: Build iOS App
         run: |
           cd ios/App
-          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          xcodebuild -project App.xcodeproj \
+            -scheme App \
+            -configuration Release \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build \
+            clean build \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
 
   build-windows:
     runs-on: windows-latest
@@ -78,9 +98,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '22.x'
+
+      - name: Verify Node version
+        run: node -v
           
-      - name: Install Dependencies
+      - name: Install Root Dependencies
         run: npm install --legacy-peer-deps
         
       - name: Build Web App
@@ -89,18 +112,22 @@ jobs:
       - name: Sync Capacitor Electron
         run: npx cap sync @capacitor-community/electron
         
-      - name: Build Windows EXE
+      - name: Install Electron Dependencies
         run: |
           cd electron
           npm install
-          npm run electron:pack
+
+      - name: Build Windows EXE
+        run: |
+          cd electron
+          npx electron-builder build --win nsis -c ./electron-builder.config.json
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Upload Windows EXE
         uses: actions/upload-artifact@v4
         with:
-          name: bdrailway-app-windows.exe
+          name: bdrailway-windows-setup
           path: electron/dist/*.exe
 
   build-linux:
@@ -111,9 +138,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '22.x'
+
+      - name: Verify Node version
+        run: node -v
           
-      - name: Install Dependencies
+      - name: Install Root Dependencies
         run: npm install --legacy-peer-deps
         
       - name: Build Web App
@@ -122,16 +152,20 @@ jobs:
       - name: Sync Capacitor Electron
         run: npx cap sync @capacitor-community/electron
         
-      - name: Build Linux DEB
+      - name: Install Electron Dependencies
         run: |
           cd electron
           npm install
-          npm run electron:pack
+
+      - name: Build Linux DEB
+        run: |
+          cd electron
+          npx electron-builder build --linux deb -c ./electron-builder.config.json
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Upload Linux DEB
         uses: actions/upload-artifact@v4
         with:
-          name: bdrailway-app-linux.deb
+          name: bdrailway-linux-deb
           path: electron/dist/*.deb

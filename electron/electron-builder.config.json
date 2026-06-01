@@ -1,5 +1,6 @@
 {
-  "appId": "com.yourdoamnin.yourapp",
+  "appId": "org.bdrailway.kotchandpur",
+  "productName": "BD Railway Kotchandpur",
   "directories": {
     "buildResources": "resources"
   },
@@ -9,9 +10,7 @@
     "capacitor.config.*",
     "app/**/*"
   ],
-  "publish": {
-    "provider": "github"
-  },
+  "publish": null,
   "nsis": {
     "allowElevation": true,
     "oneClick": false,
@@ -21,8 +20,12 @@
     "target": "nsis",
     "icon": "assets/appIcon.ico"
   },
+  "linux": {
+    "target": "deb",
+    "category": "Utility"
+  },
   "mac": {
-    "category": "your.app.category.type",
+    "category": "public.app-category.travel",
     "target": "dmg"
   }
 }

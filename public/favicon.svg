@@ -2,14 +2,8 @@
   <!-- White Background with soft rounded corners -->
   <rect width="512" height="512" fill="#ffffff" rx="128" />
   
-  <!-- Subtle orange shaded circle behind the train -->
-  <circle cx="256" cy="256" r="210" fill="#fff7ed" />
-  
-  <!-- Outer orange ring for the theme -->
-  <circle cx="256" cy="256" r="210" fill="none" stroke="#f14f29" stroke-width="8" opacity="0.6" />
-  
-  <!-- Perfect Train Icon -->
-  <g fill="#f14f29" transform="translate(128, 136) scale(0.5)">
+  <!-- Perfect Train Icon, scaled larger and centered -->
+  <g fill="#f14f29" transform="translate(64, 82) scale(0.75)">
     <path d="M128 0h256c70.7 0 128 57.3 128 128v224c0 35.3-28.7 64-64 64h-16v16c0 17.7-14.3 32-32 32h-16c-17.7 0-32-14.3-32-32v-16H160v16c0 17.7-14.3 32-32 32H112c-17.7 0-32-14.3-32-32v-16H64c-35.3 0-64-28.7-64-64V128C0 57.3 57.3 0 128 0zM400 368a48 48 0 1 0 0-96 48 48 0 1 0 0 96zM112 368a48 48 0 1 0 0-96 48 48 0 1 0 0 96zM80 112v80c0 8.8 7.2 16 16 16h320c8.8 0 16-7.2 16-16v-80c0-8.8-7.2-16-16-16H96c-8.8 0-16 7.2-16 16z"/>
   </g>
 </svg>

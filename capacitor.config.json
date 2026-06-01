@@ -1,5 +1,10 @@
 {
   "appId": "org.bdrailway.kotchandpur",
   "appName": "bdrailwaykotchandpur",
-  "webDir": "dist"
+  "webDir": "dist",
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
 }

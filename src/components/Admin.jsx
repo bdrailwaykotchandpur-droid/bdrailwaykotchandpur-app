@@ -176,7 +176,7 @@ const Admin = () => {
   const fetchStations = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities`, {
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       });
       const data = await response.json();
@@ -195,7 +195,7 @@ const Admin = () => {
   const fetchTrainComments = async () => {
   setTrainCommentsLoading(true);
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/comments/admin/all`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/comments/admin/all`, {
       headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     });
     const data = await response.json();
@@ -212,7 +212,7 @@ const deleteTrainComment = async (id) => {
   if (!window.confirm('আপনি কি এই মন্তব্যটি মুছে ফেলতে চান?')) return;
   
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/comments/admin/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/comments/admin/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     });
@@ -283,7 +283,7 @@ const deleteTrainComment = async (id) => {
   const handleImportStations = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/import/stations`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/import/stations`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
@@ -305,7 +305,7 @@ const deleteTrainComment = async (id) => {
   const handleImportTrains = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/import/trains`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/import/trains`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
@@ -426,7 +426,7 @@ const handleUpdateAllJourneyDates = async () => {
   setLoading(true);
   try {
     const token = localStorage.getItem('token');
-    const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/trains`);
+    const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/trains`);
     const data = await response.json();
     const trains = data.trains || [];
     
@@ -440,7 +440,7 @@ const handleUpdateAllJourneyDates = async () => {
       journeyDate.setHours(0, 0, 0, 0);
       
       if (journeyDate < today) {
-        const updateRes = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/trains/${train._id}`, {
+        const updateRes = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/trains/${train._id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -483,7 +483,7 @@ const handleDeleteAllTrains = async () => {
   setLoading(true);
   try {
     const token = localStorage.getItem('token');
-    const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/trains/all`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/trains/all`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -551,7 +551,7 @@ const handleDeleteAllTrains = async () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/train-routes`,
+        `${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/train-routes`,
         {
           method: 'POST',
           headers: {
@@ -767,7 +767,7 @@ const handleDeleteAllTrains = async () => {
 const fetchComments = async () => {
   try {
     const token = localStorage.getItem('token');
-    const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/comments/admin/all`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/comments/admin/all`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const data = await response.json();
@@ -781,7 +781,7 @@ const deleteComment = async (id) => {
   if (!window.confirm('এই মন্তব্য মুছে ফেলতে চান?')) return;
   try {
     const token = localStorage.getItem('token');
-    await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/comments/admin/${id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/comments/admin/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });

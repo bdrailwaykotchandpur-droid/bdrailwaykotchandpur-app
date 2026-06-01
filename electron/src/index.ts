@@ -46,7 +46,9 @@ if (electronIsDev) {
   // Initialize our app, build windows, and load content.
   await myCapacitorApp.init();
   // Check for updates if we are in a packaged app.
-  autoUpdater.checkForUpdatesAndNotify();
+  autoUpdater.checkForUpdatesAndNotify().catch((err) => {
+    console.log('Update check failed or app-update.yml missing:', err);
+  });
 })();
 
 // Handle when all of our windows are close (platforms have their own expectations).

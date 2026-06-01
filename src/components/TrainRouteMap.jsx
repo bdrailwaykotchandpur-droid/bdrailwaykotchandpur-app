@@ -45,7 +45,7 @@ const TrainRouteMap = ({ trainId, trainNumber, onStationClick }) => {
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/train-routes/${trainId || trainNumber}`,
+        `${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/train-routes/${trainId || trainNumber}`,
         {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         }

@@ -61,7 +61,7 @@ const LocationEngine = () => {
   const handlePositionReceived = async (lat, lng) => {
     setUserLocation({ lat, lng });
     try {
-      const stationsRes = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/stations`);
+      const stationsRes = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/stations`);
       const stationsData = await stationsRes.json();
       if (!stationsData.success || !stationsData.data) return;
       
@@ -81,7 +81,7 @@ const LocationEngine = () => {
       if (!closest) return;
       setNearestStation(closest);
       
-      const trainsRes = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/trains`);
+      const trainsRes = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/trains`);
       const trainsData = await trainsRes.json();
       if (!trainsData.success || !trainsData.data) return;
       
@@ -110,7 +110,7 @@ const LocationEngine = () => {
 
   const sendPing = async (lat, lng, speed, trainId) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/locations/live-ping`, {
+      await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/locations/live-ping`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

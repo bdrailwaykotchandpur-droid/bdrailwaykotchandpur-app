@@ -56,7 +56,7 @@ const LocationSubmit = () => {
 
   const fetchStations = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/stations`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/stations`);
       const data = await response.json();
       if (data.success && data.data) {
         setStations(data.data);
@@ -69,7 +69,7 @@ const LocationSubmit = () => {
   const fetchTrainRoute = async (trainId) => {
     if (trainRoutes[trainId]) return trainRoutes[trainId];
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/train-routes/${trainId}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/train-routes/${trainId}`);
       const data = await response.json();
       if (data.success && data.data && data.data.stations) {
         setTrainRoutes(prev => ({ ...prev, [trainId]: data.data.stations }));

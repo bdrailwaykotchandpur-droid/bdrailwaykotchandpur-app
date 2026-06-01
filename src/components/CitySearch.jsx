@@ -24,7 +24,7 @@ const CitySearch = ({ onSearchResults, onClear }) => {
     const fetchCities = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities`
+          `${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities`
         );
         const data = await response.json();
         if (data.success) {
@@ -62,7 +62,7 @@ const CitySearch = ({ onSearchResults, onClear }) => {
     
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities/search?city=${encodeURIComponent(searchTerm)}&type=${searchType}`
+        `${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities/search?city=${encodeURIComponent(searchTerm)}&type=${searchType}`
       );
       const data = await response.json();
       

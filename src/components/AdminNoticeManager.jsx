@@ -31,7 +31,7 @@ const AdminNoticeManager = ({ token }) => {
   const fetchNotices = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/notices/admin/all`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/notices/admin/all`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -79,8 +79,8 @@ const AdminNoticeManager = ({ token }) => {
     
     try {
       const url = editingNotice 
-        ? `${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/notices/admin/${editingNotice._id}`
-        : `${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/notices/admin`;
+        ? `${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/notices/admin/${editingNotice._id}`
+        : `${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/notices/admin`;
       
       const response = await fetch(url, {
         method: editingNotice ? 'PUT' : 'POST',
@@ -109,7 +109,7 @@ const AdminNoticeManager = ({ token }) => {
     if (!window.confirm('আপনি কি এই নোটিশটি মুছে ফেলতে চান?')) return;
     
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/notices/admin/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/notices/admin/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

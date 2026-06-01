@@ -105,7 +105,7 @@ const updateAdvancedFavicon = async (trainId, currentLocation, allStations) => {
     // Fetch train route
     const token = localStorage.getItem('token');
     const response = await fetch(
-      `${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/train-routes/${trainId}`,
+      `${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/train-routes/${trainId}`,
       { headers: token ? { 'Authorization': `Bearer ${token}` } : {} }
     );
     const data = await response.json();

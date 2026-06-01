@@ -115,7 +115,7 @@ ___________|||______________________________|______________/
   const getImageUrl = (imagePath) => {
     if (!imagePath) return '';
     if (imagePath.startsWith('http')) return imagePath;
-    const baseUrl = process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com';
+    const baseUrl = import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com';
     return `${baseUrl}${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
   };
 

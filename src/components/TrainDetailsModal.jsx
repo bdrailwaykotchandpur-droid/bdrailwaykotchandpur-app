@@ -28,7 +28,7 @@ const TrainDetailsModal = ({ train, onClose }) => {
   const fetchComments = async () => {
     if (!train || !train._id) return;
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/comments/train/${train._id}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/comments/train/${train._id}`);
       const data = await response.json();
       if (data.success) {
         setComments(data.data);
@@ -83,7 +83,7 @@ const TrainDetailsModal = ({ train, onClose }) => {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/comments`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/comments`, {
         method: 'POST',
         body: formData
       });
@@ -117,7 +117,7 @@ const TrainDetailsModal = ({ train, onClose }) => {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/comments/${commentId}/reply`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/comments/${commentId}/reply`, {
         method: 'POST',
         body: formData
       });

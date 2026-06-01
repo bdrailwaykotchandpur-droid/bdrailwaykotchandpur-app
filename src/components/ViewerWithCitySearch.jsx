@@ -160,7 +160,7 @@ const CitySearch = ({ onSearchResults, onClear }) => {
   const [cities, setCities] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities`)
+    fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities`)
       .then(r => r.json())
       .then(d => d.success && setCities(d.data))
       .catch(e => console.error(e));
@@ -242,7 +242,7 @@ const ViewerWithCitySearch = () => {
 
   const fetchStations = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities`);
       const data = await response.json();
       if (data.success && data.data) {
         setStationsList(data.data);

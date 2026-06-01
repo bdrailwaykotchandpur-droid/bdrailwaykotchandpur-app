@@ -47,7 +47,7 @@ const AdminRouteManager = ({ token }) => {
 
   const fetchAvailableStations = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities`);
       const data = await response.json();
       if (data.success && data.data) {
         setAvailableStations(data.data);
@@ -61,7 +61,7 @@ const AdminRouteManager = ({ token }) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/trains`,
+        `${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/trains`,
         {
           headers: { 'Authorization': `Bearer ${token}` }
         }
@@ -81,7 +81,7 @@ const AdminRouteManager = ({ token }) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/train-routes/${trainId || trainNumber}`,
+        `${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/train-routes/${trainId || trainNumber}`,
         {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         }
@@ -170,7 +170,7 @@ const AdminRouteManager = ({ token }) => {
       };
 
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/train-routes`,
+        `${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/train-routes`,
         {
           method: 'POST',
           headers: {

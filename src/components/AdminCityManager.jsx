@@ -34,7 +34,7 @@ const AdminCityManager = ({ token }) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities/admin/all`,
+        `${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities/admin/all`,
         {
           headers: { 'Authorization': `Bearer ${token}` }
         }
@@ -56,8 +56,8 @@ const AdminCityManager = ({ token }) => {
     
     try {
       const url = editingId 
-        ? `${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities/${editingId}`
-        : `${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities`;
+        ? `${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities/${editingId}`
+        : `${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities`;
       
       const response = await fetch(url, {
         method: editingId ? 'PUT' : 'POST',
@@ -101,7 +101,7 @@ const AdminCityManager = ({ token }) => {
     
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities/${id}`,
+        `${import.meta.env.VITE_API_URL || 'https://bdrailwaykotchandpur.onrender.com'}/api/cities/${id}`,
         {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${token}` }

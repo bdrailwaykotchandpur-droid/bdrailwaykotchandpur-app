@@ -7,10 +7,6 @@ import './Donate.css';
 
 const Donate = () => {
   const [copyFeedback, setCopyFeedback] = useState('');
-  const [trxId, setTrxId] = useState('');
-  const [amount, setAmount] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('bKash');
-  const [submitStatus, setSubmitStatus] = useState('');
 
   const copyToClipboard = (text, bankName) => {
     navigator.clipboard.writeText(text);
@@ -19,55 +15,46 @@ const Donate = () => {
   };
 
   const bankingInfo = [
-    { name: 'বিকাশ', number: '01830794876', type: 'Personal', logo: bkashLogo, id: 'bKash' },
-    { name: 'নগদ', number: '01580790310', type: 'Personal', logo: nagadLogo, id: 'Nagad' },
-    { name: 'রকেট', number: '01830794876', type: 'Personal', logo: rocketLogo, id: 'Rocket' },
-    { name: 'উপায়', number: 'N/A', type: 'Personal', logo: upayLogo, id: 'Upay' }
+    { name: 'বিকাশ', number: '01830794876', type: 'Personal', logo: bkashLogo },
+    { name: 'নগদ', number: '01580790310', type: 'Personal', logo: nagadLogo },
+    { name: 'রকেট', number: '01830794876', type: 'Personal', logo: rocketLogo },
+    { name: 'উপায়', number: 'N/A', type: 'Personal', logo: upayLogo }
   ];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!trxId || !amount) {
-      setSubmitStatus('দয়া করে ট্রানজ্যাকশন আইডি এবং পরিমাণ দিন');
-      return;
-    }
-    
-    // Simulate API submission
-    setSubmitStatus('অপেক্ষা করুন...');
-    setTimeout(() => {
-      setSubmitStatus('আপনার ডোনেশন সফলভাবে সাবমিট হয়েছে! এডমিন যাচাই করে দেখবে।');
-      setTrxId('');
-      setAmount('');
-    }, 1500);
-  };
-
   return (
-    <div className="donate-page">
-      <div className="donate-header">
-        <h2>ডোনেশন করুন</h2>
-        <p>প্রজেক্টটি বাচিয়ে রাখতে আপনার যেকোনো পরিমাণের ডোনেশান আমাদের সাহায্য করবে</p>
+    <div className="donate-page" style={{ paddingBottom: '100px', maxWidth: '600px', margin: '0 auto' }}>
+      <div className="donate-header" style={{ textAlign: 'center', marginBottom: '30px' }}>
+        <h2>Buy me a coffee ☕</h2>
+        <p style={{ marginTop: '10px', fontSize: '1.1rem', color: '#555' }}>
+          Do you want to donate? প্রজেক্টটি বাচিয়ে রাখতে কফি খাওয়ান!
+        </p>
       </div>
 
-      <div className="payment-methods">
+      <div className="payment-methods" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
         {bankingInfo.map((bank, index) => (
           <div 
             key={index}
             className="bank-card"
             onClick={() => copyToClipboard(bank.number, bank.name)}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '15px', background: '#fff', borderRadius: '10px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)', cursor: 'pointer' }}
           >
-            <div className="bank-card-content">
-              <div className="payment-logo-container">
-                <img src={bank.logo} alt={bank.name} className="payment-logo" />
+            <div className="bank-card-content" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <div className="payment-logo-container" style={{ width: '50px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <img src={bank.logo} alt={bank.name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
               </div>
               <div className="bank-info">
-                <div className="bank-name">{bank.name}</div>
-                <div className="bank-number">{bank.number}</div>
-                <div className="bank-type">{bank.type}</div>
+                <div className="bank-name" style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{bank.name}</div>
+                <div className="bank-number" style={{ color: '#f14f29', fontSize: '1.2rem', margin: '5px 0' }}>{bank.number}</div>
+                <div className="bank-type" style={{ fontSize: '0.9rem', color: '#666' }}>{bank.type}</div>
               </div>
             </div>
             <button 
               className="copy-btn" 
-              onClick={() => copyToClipboard(bank.number, bank.name)}
+              onClick={(e) => {
+                e.stopPropagation();
+                copyToClipboard(bank.number, bank.name);
+              }}
+              style={{ background: '#f14f29', color: 'white', border: 'none', padding: '8px 15px', borderRadius: '5px', cursor: 'pointer' }}
             >
               কপি
             </button>
@@ -75,64 +62,11 @@ const Donate = () => {
         ))}
       </div>
 
-      {copyFeedback && <div className="copy-feedback">{copyFeedback}</div>}
-
-      <div className="donation-form-section">
-        <h3>ডোনেশন নিশ্চিত করুন</h3>
-        <p>টাকা পাঠানোর পর নিচের ফর্মটি পূরণ করুন</p>
-        
-        <form onSubmit={handleSubmit} className="donation-form">
-          <div className="form-group">
-            <label>পেমেন্ট মেথড</label>
-            <select 
-              value={paymentMethod} 
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            >
-              <option value="bKash">বিকাশ</option>
-              <option value="Nagad">নগদ</option>
-              <option value="Rocket">রকেট</option>
-              <option value="Upay">উপায়</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>পরিমাণ (টাকা)</label>
-            <input 
-              type="number" 
-              placeholder="উদাঃ 100" 
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label>ট্রানজ্যাকশন আইডি (TrxID)</label>
-            <input 
-              type="text" 
-              placeholder="উদাঃ 8J3A9M2C" 
-              value={trxId}
-              onChange={(e) => setTrxId(e.target.value)}
-              required
-            />
-          </div>
-
-          <button type="submit" className="submit-donation-btn">সাবমিট করুন</button>
-          
-          {submitStatus && (
-            <div className={`submit-status ${submitStatus.includes('সফল') ? 'success' : 'error'}`}>
-              {submitStatus}
-            </div>
-          )}
-        </form>
-      </div>
-
-      <div className="donation-note">
-        <p>
-          <strong>গুরুত্বপূর্ণ:</strong> ডোনেশন করার পর রেফারেন্স হিসেবে "BDRAILWAY" লিখুন। 
-          ডোনেশন রিসিপ্টের জন্য bdrailwaykotchandpur@gmail.com এ যোগাযোগ করুন।
-        </p>
-      </div>
+      {copyFeedback && (
+        <div className="copy-feedback" style={{ position: 'fixed', bottom: '20px', left: '50%', transform: 'translateX(-50%)', background: '#333', color: 'white', padding: '10px 20px', borderRadius: '20px', zIndex: 1000 }}>
+          {copyFeedback}
+        </div>
+      )}
     </div>
   );
 };

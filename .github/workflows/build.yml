@@ -93,7 +93,7 @@ jobs:
         run: |
           cd electron
           npm install
-          npm run electron:make
+          npm run electron:pack
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
@@ -126,7 +126,7 @@ jobs:
         run: |
           cd electron
           npm install
-          npm run electron:make
+          npm run electron:pack
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           

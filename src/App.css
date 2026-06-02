@@ -27,8 +27,7 @@
 }
 
 /* ===== DARK MODE ===== */
-@media (prefers-color-scheme: dark) {
-  :root {
+:root[data-theme='dark'] {
     --orange-primary: #f14f29;
     --orange-dark: #ff6a47;
     --orange-light: #e03e1a;
@@ -41,7 +40,6 @@
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.5);
     --shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.6);
-  }
 }
 
 /* ===== RESET & BASE ===== */

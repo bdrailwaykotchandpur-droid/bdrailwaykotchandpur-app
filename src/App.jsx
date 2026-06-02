@@ -15,6 +15,7 @@ import Donate from './components/Donate';
 import About from './components/About';
 import ScrollToTop from './components/ScrollToTop';
 import NoticePopup from './components/NoticePopup';
+import ThemeToggle from './components/ThemeToggle';
 import './App.css';
 
 function App() {
@@ -86,6 +87,7 @@ function App() {
           </Routes>
         </main>
         
+        <ThemeToggle />
         <ScrollToTop />
       </div>
     </Router>

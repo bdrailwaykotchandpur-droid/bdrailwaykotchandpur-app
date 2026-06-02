@@ -180,7 +180,7 @@ const LocationEngine = () => {
     return (
       <div style={{ position: 'fixed', bottom: '80px', right: '20px', background: '#dc3545', color: 'white', padding: '15px', borderRadius: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.2)', zIndex: 9999, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: 'white', animation: 'pulse 1.5s infinite' }}></span>
+          <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: 'var(--bg-white, #fff)', animation: 'pulse 1.5s infinite' }}></span>
           <strong>লাইভ ব্রডকাস্ট চলছে</strong>
         </div>
         {broadcastStats && (
@@ -188,7 +188,7 @@ const LocationEngine = () => {
             গতি: {toBengaliDigits(broadcastStats.speed)} কি.মি./ঘণ্টা
           </div>
         )}
-        <button onClick={stopBroadcasting} style={{ background: 'white', color: '#dc3545', border: 'none', padding: '5px 15px', borderRadius: '5px', fontWeight: 'bold', cursor: 'pointer' }}>বন্ধ করুন</button>
+        <button onClick={stopBroadcasting} style={{ background: 'var(--bg-white, #fff)', color: '#dc3545', border: 'none', padding: '5px 15px', borderRadius: '5px', fontWeight: 'bold', cursor: 'pointer' }}>বন্ধ করুন</button>
       </div>
     );
   }

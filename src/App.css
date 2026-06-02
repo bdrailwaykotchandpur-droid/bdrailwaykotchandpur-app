@@ -2124,7 +2124,7 @@ body {
   cursor: pointer;
   font-weight: 600;
   font-size: 1rem;
-  color: #666;
+  color: var(--text-light);
   transition:
     background 0.2s ease,
     color 0.2s ease;
@@ -2255,7 +2255,7 @@ input[type="password"]:active {
   padding: 20px;
 }
 .admin-login-form {
-  background: white;
+  background: var(--bg-white);
   padding: 30px;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
@@ -2351,7 +2351,7 @@ input[type="password"]:active {
   padding: 10px 15px !important;
   border: 1px solid #ddd !important;
   border-radius: 8px !important;
-  background: white !important;
+  background: var(--bg-white) !important;
 }
 .admin-section .submit-btn {
   display: inline-block !important;
@@ -2797,7 +2797,7 @@ input[type="password"]:active {
   width: 30px;
   height: 30px;
   margin: 0 auto 5px;
-  background: white;
+  background: var(--bg-white);
   border-radius: 6px;
   padding: 4px;
   display: flex;
@@ -2976,7 +2976,7 @@ input[type="password"]:active {
   border: 1px solid #dee2e6;
   border-radius: 20px;
   font-size: 0.8rem;
-  background: white;
+  background: var(--bg-white);
 }
 .search-btn-minimal,
 .clear-btn-minimal {
@@ -2999,7 +2999,7 @@ input[type="password"]:active {
   top: 100%;
   left: 0;
   right: 0;
-  background: white;
+  background: var(--bg-white);
   border: 1px solid #dee2e6;
   border-radius: 8px;
   z-index: 100;
@@ -3056,7 +3056,7 @@ input[type="password"]:active {
   overflow-x: auto;
   border-radius: 16px;
   border: 1px solid #e9ecef;
-  background: white;
+  background: var(--bg-white);
 }
 
 .train-table-minimal {
@@ -4463,7 +4463,7 @@ input[type="time"]:focus {
   width: 100%;
   table-layout: auto;
   border-collapse: collapse;
-  background: white;
+  background: var(--bg-white);
   border-radius: 16px;
   display: block;
   overflow-x: auto;
@@ -4917,7 +4917,7 @@ input[type="time"]:focus {
 }
 /* ===== ROUND RECTANGLE SECTION BOXES ===== */
 .admin-section {
-  background: white;
+  background: var(--bg-white);
   border-radius: 20px;
   padding: 20px;
   margin-bottom: 25px;
@@ -5111,7 +5111,7 @@ input[type="time"]:focus {
   content: "";
   width: 8px;
   height: 8px;
-  background: white;
+  background: var(--bg-white);
   border-radius: 50%;
   display: inline-block;
   animation: dotBlink 0.6s ease-in-out infinite;
@@ -5177,7 +5177,7 @@ body.live-trains-active {
 }
 
 .report-location-container {
-  background: white;
+  background: var(--bg-white);
   padding: 20px;
   border-radius: 16px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
@@ -5187,7 +5187,7 @@ body.live-trains-active {
   margin-bottom: 20px;
   border-radius: 16px;
   overflow: hidden;
-  background: white;
+  background: var(--bg-white);
   border: 1px solid #e9ecef;
   transition: all 0.3s ease;
 }
@@ -5322,7 +5322,7 @@ body.live-trains-active {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: white;
+  background: var(--bg-white);
   display: inline-block;
   animation: pulse-dot 1s ease-in-out infinite;
 }
@@ -5427,7 +5427,7 @@ body.live-trains-active {
 }
 
 .notice-popup-content {
-  background: white;
+  background: var(--bg-white);
   border-radius: 20px;
   max-width: 500px;
   width: 90%;
@@ -5794,7 +5794,7 @@ body.live-trains-active {
   width: 100%;
   max-width: 380px;
   height: 100vh;
-  background: white;
+  background: var(--bg-white);
   z-index: 1050;
   box-shadow: -5px 0 25px rgba(0,0,0,0.1);
   display: flex;
@@ -5882,7 +5882,7 @@ body.live-trains-active {
 .cart-item-details h4 {
   margin: 0 0 5px 0;
   font-size: 0.95rem;
-  color: #2c3e50;
+  color: var(--text-dark);
 }
 
 .cart-item-details p {
@@ -5938,7 +5938,7 @@ body.live-trains-active {
   font-size: 1.1rem;
   font-weight: bold;
   margin-bottom: 15px;
-  color: #2c3e50;
+  color: var(--text-dark);
 }
 
 .checkout-btn, .place-order-btn {
@@ -5955,7 +5955,7 @@ body.live-trains-active {
 
 /* Toggle btn */
 .cart-toggle-btn {
-  background: white;
+  background: var(--bg-white);
   color: var(--orange-primary);
   border: 2px solid white;
   padding: 8px 16px;
@@ -6188,7 +6188,7 @@ body.live-trains-active {
 }
 
 .admin-topbar {
-  background-color: white;
+  background-color: var(--bg-white);
   padding: 15px 30px;
   display: flex;
   justify-content: flex-end;
@@ -6214,7 +6214,7 @@ body.live-trains-active {
 }
 
 .admin-section {
-  background: white;
+  background: var(--bg-white);
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
@@ -6224,7 +6224,7 @@ body.live-trains-active {
 
 .admin-section h3 {
   margin-bottom: 20px;
-  color: #2c3e50;
+  color: var(--text-dark);
   border-bottom: 2px solid #f14f29;
   padding-bottom: 10px;
   display: inline-block;
@@ -6253,7 +6253,7 @@ body.live-trains-active {
 }
 
 .location-engine-modal {
-  background: white;
+  background: var(--bg-white);
   width: 90%;
   max-width: 400px;
   border-radius: 24px;
@@ -6473,7 +6473,7 @@ body.live-trains-active {
 
 .data-table tbody tr {
   transition: all 0.2s ease-in-out;
-  background: white;
+  background: var(--bg-white);
 }
 
 .data-table tbody tr:hover {
@@ -6549,7 +6549,7 @@ body.live-trains-active {
 /* THE LEFT TABS (Now a rounded rectangle box) */
 .admin-v4-sidebar {
   width: 280px;
-  background: white; /* White box like right side */
+  background: var(--bg-white); /* White box like right side */
   border-radius: 30px; /* Rounded rectangle */
   padding: 30px 15px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.05);
@@ -6631,7 +6631,7 @@ body.live-trains-active {
 /* THE MAIN CONTENT BOX (Right Side) */
 .admin-v4-main-content {
   flex: 1;
-  background: white; /* The right box */
+  background: var(--bg-white); /* The right box */
   border-radius: 30px; /* Rounded rectangle */
   padding: 40px;
   min-height: calc(100vh - 60px);
@@ -6704,7 +6704,7 @@ body.live-trains-active {
 /* THE LEFT TABS (Now a rounded rectangle box) */
 .admin-v4-sidebar {
   width: 280px;
-  background: white; /* White box like right side */
+  background: var(--bg-white); /* White box like right side */
   border-radius: 30px; /* Rounded rectangle */
   padding: 30px 15px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.05);
@@ -6786,7 +6786,7 @@ body.live-trains-active {
 /* THE MAIN CONTENT BOX (Right Side) */
 .admin-v4-main-content {
   flex: 1;
-  background: white; /* The right box */
+  background: var(--bg-white); /* The right box */
   border-radius: 30px; /* Rounded rectangle */
   padding: 40px;
   min-height: calc(100vh - 60px);

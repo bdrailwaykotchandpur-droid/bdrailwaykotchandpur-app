@@ -180,7 +180,7 @@ const AdminNoticeManager = ({ token }) => {
                 onChange={handleQuillChange} 
                 modules={quillModules}
                 theme="snow"
-                style={{ backgroundColor: 'white', marginBottom: '15px' }}
+                style={{ backgroundColor: 'var(--bg-white, #fff)', marginBottom: '15px' }}
               />
             </div>
             
@@ -230,7 +230,7 @@ const AdminNoticeManager = ({ token }) => {
           <p>কোন নোটিশ নেই</p>
         ) : (
           notices.map(notice => (
-            <div key={notice._id} className="notice-card" style={{ background: 'white', borderRadius: '10px', padding: '15px', marginBottom: '10px', borderLeft: `4px solid ${noticeTypes.find(t => t.value === notice.noticeType)?.color || '#f14f29'}` }}>
+            <div key={notice._id} className="notice-card" style={{ background: 'var(--bg-white, #fff)', borderRadius: '10px', padding: '15px', marginBottom: '10px', borderLeft: `4px solid ${noticeTypes.find(t => t.value === notice.noticeType)?.color || '#f14f29'}` }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div style={{ flex: 1 }}>
                   <h4 style={{ marginBottom: '5px' }}>{notice.title}</h4>

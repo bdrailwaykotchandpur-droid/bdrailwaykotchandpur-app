@@ -34,7 +34,7 @@ const About = () => {
           <p className="time">সকাল ১০ টা হতে বিকাল ৫টা</p>
         </div>
 
-        <div className="coffee-small-section" style={{ background: '#f9f9f9', color: '#333', padding: '10px', borderRadius: '8px', margin: '15px 0', textAlign: 'center', fontSize: '0.9rem' }}>
+        <div className="coffee-small-section" style={{ background: '#f9f9f9', color: 'var(--text-dark)', padding: '10px', borderRadius: '8px', margin: '15px 0', textAlign: 'center', fontSize: '0.9rem' }}>
           <p style={{ margin: '0 0 10px 0', fontWeight: 'bold', color: '#f14f29' }}>প্রজেক্টটি বাঁচিয়ে রাখতে ডোনেট করুন!</p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', flexWrap: 'wrap' }}>
             <p style={{ margin: '4px 0', display: 'flex', alignItems: 'center', gap: '5px' }}>

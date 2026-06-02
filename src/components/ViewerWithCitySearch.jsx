@@ -173,7 +173,7 @@ const CitySearch = ({ onSearchResults, onClear }) => {
 
   return (
     <div className="city-search-minimal" style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
-      <div className="search-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', alignItems: 'center', background: 'white', padding: '15px 20px', borderRadius: '40px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
+      <div className="search-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', alignItems: 'center', background: 'var(--bg-white, #fff)', padding: '15px 20px', borderRadius: '40px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
         
         <div className="search-input-wrapper" style={{ position: 'relative' }}>
           <select 
@@ -420,7 +420,7 @@ const ViewerWithCitySearch = () => {
         right: isFilterSidebarOpen ? '2%' : '-350px',
         width: '300px',
         height: '96vh',
-        background: '#fff',
+        background: 'var(--bg-white, #fff)',
         boxShadow: '-4px 4px 20px rgba(0,0,0,0.15)',
         zIndex: 1001,
         transition: 'right 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
@@ -508,7 +508,7 @@ const ViewerWithCitySearch = () => {
             width: '12px', 
             height: '12px', 
             borderRadius: '50%', 
-            background: 'white', 
+            background: 'var(--bg-white, #fff)', 
             display: 'inline-block',
             animation: liveMode ? 'pulse 1.5s infinite' : 'none'
           }}></span>
@@ -712,7 +712,7 @@ const ViewerWithCitySearch = () => {
                               background: '#f8f9fa',
                               borderLeft: '3px solid #ffc107',
                               fontSize: '0.8rem',
-                              color: '#333',
+                              color: 'var(--text-dark)',
                               borderRadius: '4px',
                               maxWidth: '250px',
                               whiteSpace: 'normal',

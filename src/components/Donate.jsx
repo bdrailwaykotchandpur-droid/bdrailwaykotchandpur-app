@@ -25,7 +25,7 @@ const Donate = () => {
     <div className="donate-page" style={{ paddingBottom: '100px', maxWidth: '600px', margin: '0 auto' }}>
       <div className="donate-header" style={{ textAlign: 'center', marginBottom: '30px' }}>
         <h2>Buy me a coffee ☕</h2>
-        <p style={{ marginTop: '10px', fontSize: '1.1rem', color: '#555' }}>
+        <p style={{ marginTop: '10px', fontSize: '1.1rem', color: 'var(--text-light)' }}>
           Do you want to donate? প্রজেক্টটি বাচিয়ে রাখতে কফি খাওয়ান!
         </p>
       </div>
@@ -36,7 +36,7 @@ const Donate = () => {
             key={index}
             className="bank-card"
             onClick={() => copyToClipboard(bank.number, bank.name)}
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '15px', background: '#fff', borderRadius: '10px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)', cursor: 'pointer' }}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '15px', background: 'var(--bg-white, #fff)', borderRadius: '10px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)', cursor: 'pointer' }}
           >
             <div className="bank-card-content" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
               <div className="payment-logo-container" style={{ width: '50px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -45,7 +45,7 @@ const Donate = () => {
               <div className="bank-info">
                 <div className="bank-name" style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{bank.name}</div>
                 <div className="bank-number" style={{ color: '#f14f29', fontSize: '1.2rem', margin: '5px 0' }}>{bank.number}</div>
-                <div className="bank-type" style={{ fontSize: '0.9rem', color: '#666' }}>{bank.type}</div>
+                <div className="bank-type" style={{ fontSize: '0.9rem', color: 'var(--text-light)' }}>{bank.type}</div>
               </div>
             </div>
             <button 

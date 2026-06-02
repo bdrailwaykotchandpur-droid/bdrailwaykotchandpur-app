@@ -144,7 +144,7 @@ const TrainDetailsModal = ({ train, onClose }) => {
         
         <div style={{ textAlign: 'center', marginBottom: '20px' }}>
           <h2 style={{ color: '#f14f29' }}>{train.name || 'ট্রেন'}</h2>
-          <p style={{ fontSize: '0.9rem', color: '#666' }}>ট্রেন নং: {toBengaliDigits(train.number) || '—'}</p>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-light)' }}>ট্রেন নং: {toBengaliDigits(train.number) || '—'}</p>
           <p style={{ fontSize: '0.8rem', color: '#999' }}>{train.from || '—'} → {train.to || '—'}</p>
         </div>
 
@@ -182,7 +182,7 @@ const TrainDetailsModal = ({ train, onClose }) => {
             {/* 1. Show comments list first (Facebook style) */}
             <div style={{ marginBottom: '20px' }}>
               {comments.length === 0 ? (
-                <p style={{ textAlign: 'center', color: '#666', padding: '20px' }}>কোন মন্তব্য নেই। প্রথম মন্তব্য করুন!</p>
+                <p style={{ textAlign: 'center', color: 'var(--text-light)', padding: '20px' }}>কোন মন্তব্য নেই। প্রথম মন্তব্য করুন!</p>
               ) : (
                 comments.map((comment) => (
                   <div key={comment._id} style={{ borderBottom: '1px solid #e9ecef', padding: '12px 0', background: comment.isSystemUpdate ? '#fff5f2' : 'transparent', borderRadius: comment.isSystemUpdate ? '10px' : '0', padding: comment.isSystemUpdate ? '15px' : '12px 0', position: 'relative' }}>
@@ -213,7 +213,7 @@ const TrainDetailsModal = ({ train, onClose }) => {
                     {!comment.isSystemUpdate && (
                       <button 
                         onClick={() => setReplyingTo(replyingTo === comment._id ? null : comment._id)}
-                        style={{ background: 'none', border: 'none', color: '#666', fontSize: '0.85rem', cursor: 'pointer', padding: '5px 0', marginTop: '5px', fontWeight: 'bold' }}
+                        style={{ background: 'none', border: 'none', color: 'var(--text-light)', fontSize: '0.85rem', cursor: 'pointer', padding: '5px 0', marginTop: '5px', fontWeight: 'bold' }}
                       >
                         রিপ্লাই দিন
                       </button>
@@ -225,7 +225,7 @@ const TrainDetailsModal = ({ train, onClose }) => {
                         {comment.replies.map((reply, idx) => (
                           <div key={idx} style={{ marginBottom: '15px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                              <strong style={{ color: '#333', fontSize: '0.9rem' }}>{reply.nickname}</strong>
+                              <strong style={{ color: 'var(--text-dark)', fontSize: '0.9rem' }}>{reply.nickname}</strong>
                               <span style={{ fontSize: '0.7rem', color: '#999' }}>
                                 {new Date(reply.createdAt).toLocaleString('bn-BD')}
                               </span>
@@ -264,7 +264,7 @@ const TrainDetailsModal = ({ train, onClose }) => {
                           style={{ marginBottom: '8px', padding: '8px', fontSize: '0.85rem' }}
                         />
                         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                          <label style={{ background: '#e9ecef', color: '#333', padding: '5px 12px', borderRadius: '15px', cursor: 'pointer', fontSize: '0.8rem' }}>
+                          <label style={{ background: '#e9ecef', color: 'var(--text-dark)', padding: '5px 12px', borderRadius: '15px', cursor: 'pointer', fontSize: '0.8rem' }}>
                             ছবি
                             <input type="file" accept="image/*" onChange={handleReplyPhotoChange} style={{ display: 'none' }} />
                           </label>

@@ -178,7 +178,7 @@ ___________|||______________________________|______________/
             onChange={(value) => setFormData(prev => ({ ...prev, newsContent: value }))} 
             theme="snow"
             placeholder="খবরের সম্পূর্ণ বিবরণ লিখুন (ন্যূনতম ৫০ অক্ষর)"
-            style={{ backgroundColor: 'white', marginBottom: '15px', minHeight: '150px' }}
+            style={{ backgroundColor: 'var(--bg-white, #fff)', marginBottom: '15px', minHeight: '150px' }}
           />
           <div className="char-count" style={{ marginTop: '45px' }}>
             {formData.newsContent.replace(/<[^>]+>/g, '').length} / 50+ অক্ষর

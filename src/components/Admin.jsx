@@ -929,7 +929,7 @@ const deleteComment = async (id) => {
                 <div className="stat-number">{toBengaliDigits(stats.pendingSubmissions || 0)}</div>
               </div>
             </div>
-            <div style={{ marginTop: '30px', background: 'white', padding: '20px', borderRadius: '12px' }}>
+            <div style={{ marginTop: '30px', background: 'var(--bg-white, #fff)', padding: '20px', borderRadius: '12px' }}>
               <h4 style={{ marginBottom: '20px', textAlign: 'center' }}>সিস্টেম ওভারভিউ</h4>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={chartData}>
@@ -942,7 +942,7 @@ const deleteComment = async (id) => {
                 </BarChart>
               </ResponsiveContainer>
             </div>
-            <div style={{ marginTop: '30px', background: 'white', padding: '20px', borderRadius: '12px' }}>
+            <div style={{ marginTop: '30px', background: 'var(--bg-white, #fff)', padding: '20px', borderRadius: '12px' }}>
               <h4 style={{ marginBottom: '20px', textAlign: 'center' }}>সাবমিশন স্ট্যাটাস</h4>
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
@@ -1584,7 +1584,7 @@ const deleteComment = async (id) => {
                       value={newsForm.content} 
                       onChange={(value) => setNewsForm({...newsForm, content: value})} 
                       theme="snow"
-                      style={{ backgroundColor: 'white', minHeight: '150px', marginBottom: '15px' }}
+                      style={{ backgroundColor: 'var(--bg-white, #fff)', minHeight: '150px', marginBottom: '15px' }}
                     />
                   </div>
                   <button type="submit" className="submit-btn" disabled={loading} style={{ marginTop: '20px' }}>
@@ -1784,7 +1784,7 @@ const deleteComment = async (id) => {
                   value={editingTrain?.scheduleText || ''} 
                   onChange={(value) => setEditingTrain(prev => ({ ...prev, scheduleText: value }))} 
                   theme="snow"
-                  style={{ backgroundColor: 'white', minHeight: '150px', marginBottom: '15px' }}
+                  style={{ backgroundColor: 'var(--bg-white, #fff)', minHeight: '150px', marginBottom: '15px' }}
                 />
               </div>
               <button type="submit" className="submit-btn" disabled={loading} style={{ marginTop: '20px' }}>{loading ? 'আপডেট হচ্ছে...' : 'আপডেট করুন'}</button>
